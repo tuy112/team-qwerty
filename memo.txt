@@ -3,7 +3,7 @@ npx sequelize model:generate --name Stores --attributes email:string,password:st
 npx sequelize model:generate --name Menus --attributes menuName:string,menuImage:string,price:integer
 
 
-npm install -D nodemon
+npm install -D sequelize-cli
 
 
 desc Stores
@@ -11,4 +11,5 @@ desc Stores
 drop table??
 
 // 테이블 생성 취소
-npx sequelize db:migrate:undo 
+npx sequelize db:migrate:undo:all
+

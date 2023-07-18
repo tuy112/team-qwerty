@@ -43,6 +43,16 @@ module.exports = (sequelize, DataTypes) => {
   totalRating: {
       type: DataTypes.INTEGER,
   },
+  createdAt: {
+    allowNull: false, // NOT NULL
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    allowNull: false, // NOT NULL
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
   }, {
     sequelize,
     modelName: 'Stores',

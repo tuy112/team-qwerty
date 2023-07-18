@@ -4,8 +4,6 @@ const port = 3000;// HTML, CSS
 
 const path = require('path');
 
-const cors = require('cors');
-
 
 // cookie parser
 const cookieParser = require("cookie-parser");
@@ -14,17 +12,23 @@ const storeRouter = require("./routes/storeRoute.js");
 const checkRouter = require("./routes/checkRoute.js");
 const menuRouter = require("./routes/menuRoute.js");
 
+const UsersRouter = require("./routes/usersOrdersRoute.js");
+const UsersOrderRouter = require("./routes/usersReviewsRoute.js");
+const UsersReviewRouter = require("./routes/usersRoute.js");
+
+
 // Middleware ==================================================
 app.use(express.json()); // req.body parser
 app.use(cookieParser()); // cookie parser
-app.use(cors()); // front-back connect
-// 
-// localhost:3000/api/
-app.use('/api', [storeRouter, checkRouter, menuRouter]);
 
-// Middleware ==================================================oin(__dirname, 'assets')));
+// localhost:3000/api/
+app.use('/api', [storeRouter, checkRouter, menuRouter, UsersRouter, UsersOrderRouter, UsersReviewRouter]);
+// Middleware ==================================================
+
+// HTML, CSS
+app.use(express.static(path.join(__dirname, 'assets')));
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'assets', 'index.html'));
+  res.sendFile(path.join(__dirname, 'assets', 'index.html'));
 });
 
 app.listen(port, () => {
