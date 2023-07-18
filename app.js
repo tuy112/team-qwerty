@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const storeRouter = require("./routes/store.route");
-const menuRouter = require("./routes/menu.route");
+const storeRouter = require('./routes/store.route');
+const menuRouter = require('./routes/menu.route');
 
 const path = require('path');
 
