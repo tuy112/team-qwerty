@@ -85,6 +85,19 @@ router.post('/ceo/login', async (req, res) => {
 });
 
 // 3. 가게 정보 조회 API
+router.get("/storeInfoList", async (req,res) =>{
+    try{
+        const storeList = await Stores.findAll({
+            attributes:["storeName", "storeImage", "totalRating","createdAt"],
+            order: [["createdAt", "DESC"]],
+        })
+        return res.status(200).json({ data:storeList})
+    }catch(error){
+        console.log(error)
+        return res.status(400).json({errorMessage:"가게 목록 조회 과정에 오류가 발생하였습니다."})
+    }
+})
+
 router.get('/storeInfo/:storeId', async (req, res) => {
     const { storeId } = req.params;
     try{
