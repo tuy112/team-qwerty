@@ -1,0 +1,5 @@
+how to make migrations file
+
+npx sequelize model:generate --name DBStore --attributes email:string,password:string,storeName:string,storeImage:string,totalRating:integer
+
+npx sequelize db:migrate
