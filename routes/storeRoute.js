@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const {DBStores} = require('../models');
+const {Stores} = require('../models');
 const router = express.Router();
 
 // 내 분담 역할
@@ -36,13 +36,13 @@ router.post('/ceo/signup', async (req, res) => {
         });
     }
 
-    const isExistUser = await DBStores.findOne({where: {email: email}});
+    const isExistUser = await Stores.findOne({where: {email: email}});
     if (isExistUser) {
         return res.status(412).json({errorMessage: '이미 존재하는 이메일입니다.'});
     }
 
     try {
-        await DBStores.create({email, password, storeName, storeImage});
+        await Stores.create({email, password, storeName, storeImage});
         return res.status(201).json({message: '가게가 등록되었습니다.'});
     } catch (error) {
         console.log(error);
@@ -53,7 +53,7 @@ router.post('/ceo/signup', async (req, res) => {
 // 2. 사장님 로그인 API
 router.post('/ceo/login', async (req, res) => {
     const {email, password} = req.body;
-    const ceoCheck = await DBStores.findOne({
+    const ceoCheck = await Stores.findOne({
         where: {email: email},
     });
 
@@ -67,7 +67,7 @@ router.post('/ceo/login', async (req, res) => {
         // JWT 생성
         const token = jwt.sign(
             {
-                userId: ceoCheck.userId,
+                userId: ceoCheck.storeId,
             },
             'customized_secret_key',
             // 필요 시 수정
@@ -85,18 +85,27 @@ router.post('/ceo/login', async (req, res) => {
 });
 
 // 3. 가게 정보 조회 API
-router.get('storeInfo/:storeId', async (req, res) => {
-    const storeInfo = await DBStores.findOne({
+router.get('/storeInfo/:storeId', async (req, res) => {
+    const { storeId } = req.params;
+    try{
+
+        const storeInfo = await Stores.findOne({
         where: {storeId: storeId},
-        attributes: ['storeName', 'storeImage', 'totalRating', 'createdAt', 'updatedAt'],
+        attributes: ['storeName', 'storeImage',"totalRating", 'createdAt'],
     });
 
     return res.status(200).json({data: storeInfo});
+}
+    catch(error){
+        console.log(error)
+        return res.status(400).json({errorMessage:" 가게 정보 조회 과정에 에러가 발생했습니다."})
+    }
 });
 
-// 4. 가입한 사장님 목록 조회 API. 개발용. 개발 완료시 삭제할 것
-router.get('/ceo/list', ceo - middleware, async (req, res) => {
-    const ceoList = await DBStores.findAll({
+// 4. 가입한 사장님 목록 조회 API. 개발용. 개발 완료시 삭제할 것 -> 정말 안 쓸때 지우는 것
+router.get('/ceo/list',  async (req, res) => {
+    
+    const ceoList = await Stores.findAll({
         attributes: ['email', 'password', 'createdAt', 'updatedAt'],
         order: [['createdAt', 'DESC']],
     });
@@ -110,7 +119,7 @@ router.put('/ceo/:storeId', async (req, res) => {
     const {storeId} = req.params;
     const {storeName, storeImage} = req.body;
 
-    const ceoIdToUpdate = await DBStores.findOne({
+    const ceoIdToUpdate = await Stores.findOne({
         where: {storeId: storeId},
     });
 
@@ -135,7 +144,7 @@ router.put('/ceo/:storeId', async (req, res) => {
 router.delete('/ceo/:storeId', async (req, res) => {
     const {storeId} = req.params;
 
-    const ceoIdToDelete = await DBStores.findOne({
+    const ceoIdToDelete = await Stores.findOne({
         where: {storeId: storeId},
     });
 
