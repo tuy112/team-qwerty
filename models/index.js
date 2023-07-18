@@ -13,11 +13,23 @@ let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
+<<<<<<< HEAD
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs
   .readdirSync(__dirname)
+=======
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config,
+  );
+}
+
+fs.readdirSync(__dirname)
+>>>>>>> 38242fda63d3ef6d3c02ca5a37e35586d0212dd5
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
@@ -27,7 +39,14 @@ fs
     );
   })
   .forEach(file => {
+<<<<<<< HEAD
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+=======
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes,
+    );
+>>>>>>> 38242fda63d3ef6d3c02ca5a37e35586d0212dd5
     db[model.name] = model;
   });
 
