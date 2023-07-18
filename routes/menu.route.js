@@ -1,5 +1,5 @@
 const express = require('express');
-const {store, menu} = require('../models');
+const { store, menu } = require('../models');
 const authMiddleware = require('../middlewares/auth-middleware');
 const router = express.Router();
 
@@ -12,10 +12,10 @@ router.get('/ceo/checkOrder', async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
-    return res.status(200).json({data: orders});
+    return res.status(200).json({ data: orders });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({message: '서버 오류'});
+    return res.status(500).json({ message: '서버 오류' });
   }
 });
 
@@ -28,10 +28,10 @@ router.get('/ceo/checkDelivery', async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
 
-    return res.status(200).json({message: '배달이 완료되었습니다.'});
+    return res.status(200).json({ message: '배달이 완료되었습니다.' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({message: '서버 오류'});
+    return res.status(500).json({ message: '서버 오류' });
   }
 });
 

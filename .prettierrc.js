@@ -27,5 +27,17 @@ module.exports = {
         printWidth: 200,
       },
     },
+    {
+      files: ['*.js', '*.ts', '*.jsx', '*.tsx', '*.css'],
+      options: {
+        editor: 'esbenp.prettier-vscode',
+      },
+    },
+    {
+      files: ['*.html'],
+      options: {
+        editor: 'vscode.html-language-features',
+      },
+    },
   ],
 };

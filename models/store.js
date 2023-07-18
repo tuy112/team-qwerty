@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Store.init(
     {
+      storeId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       email: {
         allowNull: false,
         type: DataTypes.STRING,
