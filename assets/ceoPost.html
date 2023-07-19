@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/ceo.css">
 </head>
 <body>
-    <form action="http://localhost:3000/api/ceo/getMenuAll" method="post">
+    <form>
         <div>
             <label for="menuName">메뉴이름:</label>
             <input type="text" id="menuName" />
@@ -23,7 +23,7 @@
         </div>
 
         <div class="submitBtn">
-            <button type="submit" onclick="">음식등록</button>
+            <button type="submit" onclick="menuPost();">음식등록</button>
         </div>
     </form>
 
@@ -31,6 +31,5 @@
 
     <!-- script part -->
     <script src="./js/ceoOrder.js"></script>
-    <script></script>
 </body>
 </html>
