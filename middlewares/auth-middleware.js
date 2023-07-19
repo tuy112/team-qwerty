@@ -1,3 +1,5 @@
+// 사장님 미들웨어
+
 const jwt = require("jsonwebtoken");
 const { Stores } = require("../models");
 
