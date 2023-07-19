@@ -1,0 +1,15 @@
+npx sequelize model:generate --name Stores --attributes email:string,password:string,storeName:string,storeImage:string,totalRating:integer
+
+npx sequelize model:generate --name Menus --attributes menuName:string,menuImage:string,price:integer
+
+
+npm install -D sequelize-cli
+
+
+desc Stores
+
+drop table??
+
+// 테이블 생성 취소
+npx sequelize db:migrate:undo:all
+

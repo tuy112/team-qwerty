@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
+  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+  <!-- Bootstrap CSS -->
+  <!--  rel="stylesheet" 가 들어가야 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!-- font-awesome CSS -->
+  <script src="https://kit.fontawesome.com/727ce840af.js" crossorigin="anonymous"></script>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <!-- 날짜 CDN -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+  <title>리뷰 작성</title>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+
+  <!-- 게시글 -->
+<div class="post-card" >
+    <div class="row align-items-md-stretch" >
+      <div class="col-md-6" >
+        <div class="h-100 p-4 bg-body-tertiary border rounded-3" >
+          <div class="col-md-6 text-center" >
+            <div>
+              <img id="foodImg" src="https://d2v80xjmx68n4w.cloudfront.net/gigs/fPoZ31584321311.jpg" alt="detailImg" />
+            </div>
+          </div>
+          <h2 id="restaurantName">Restaurant Name</h2>
+          <p id="nickname" >nickname</p>
+          <p id="content">content</p>
+          <p id="menu">menu</p>
+          <p id="zone">zone</p>
+          <img src="../images/like.png" alt="" class="likeIcon" onclick="postLike()">
+          <h1 id="like"></h1>
+          <div class="btn-container">
+            <button id="updateBtn" class="updateBtn" type="button" onclick="postUpdate()">수정하기</button>
+            <button id="deleteBtn" class="deleteBtn" type="button" onclick="postDelete()">삭제하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<body class="body">
+  <link rel="stylesheet" href="../css/customer.css">
+  <div class="wrap">
+    <h1 class="post">리뷰 작성</h1> <!-- action에는 localhost뒤에 들어가는 주소 -->
+    <form class="form-group" action="/api/user/:storeId/review" method="POST" enctype="multipart/form-data">
+      <div class="label" style="float: left">
+
+
+        <!-- 별점 1~5 설정 -->
+        <div class="rating" style="float: right">
+          가게에 대한 1~5 평점을 선택해 주세요
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+            <label class="form-check-label" for="inlineRadio1">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+            <label class="form-check-label" for="inlineRadio2">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+            <label class="form-check-label" for="inlineRadio3">3</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+            <label class="form-check-label" for="inlineRadio4">4</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+            <label class="form-check-label" for="inlineRadio5">5</label>
+          </div>
+          <div id="categoryresult"></div>
+        </div>
+        <br />
+
+        <!-- 리뷰 내용 입력 -->
+        <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="리뷰를 입력해주세요"
+              style="width: 600px"
+              id="comment-input"
+            />
+            <label for="comment-input">댓글 입력</label>
+          </div>
+          <button class="btn btn-outline-success" style="margin-top: 10px;" type="button" onclick="commentInput()">등록하기</button>
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <h4 class="pb-2 mb-0" id="comment-list">Comment</h4>
+    <!-- js파일 연결 -->
+    <script type="text/javascript" src="../js/review.js"></script>
+    <!-- <script type="text/javascript" src="./js/userLog.js"></script> -->
+        </div>
+
+
+
+        <!-- 리뷰 전체 업로드 -->
+        <button style="float: right" class="btn btn-primary" type="submit">리뷰 작성 </button>
+    </form>
+    <button style="float: right" class="btn btn-primary" onclick="back()">뒤로 가기 </button>
+  </div>
+  </div>
+  <script src='../js/review.js'></script>
+</body>
+
+</html>
