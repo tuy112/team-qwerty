@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
-      }
+      },
     };
   
     try {
@@ -18,3 +18,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error(e);
     }
   });
+
+  // 음식 주문
+  fetch('http://localhost:3000/api/ceo/getMenuAll', {
+    method: 'post',
+    body: JSON.stringify({
+        menuName: menuName,
+        menuImage: menuImage,
+        price: price
+    })
+  })
+  .then(res => {
+    if (res.status === 200) {
+        alert("음식 추가완료");
+    } else if (res.status === 403) {
+        return res.json();
+    }
+  })
+  .then(res => {
+    console.log("에러 메시지 ->", res.message);
+  })
