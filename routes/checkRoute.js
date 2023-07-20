@@ -21,7 +21,7 @@ const router = express.Router();
 
 // // // <사장님> 배달 완료_GET
 // // router.get('/ceo/checkDelivery', async (req, res) => {
-// //   try { 
+// //   try {
 // //     const deliveryStatus = await store.findAll({
 // //       attributes: ['storeName', 'storeImage', 'totalRating'],
 // //       // 내림차순 정렬

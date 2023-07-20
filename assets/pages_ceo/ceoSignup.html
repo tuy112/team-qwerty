@@ -9,6 +9,9 @@
     <title>사장님 회원가입</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/ceo.css">
+    
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -40,30 +43,9 @@
             </div>
         </form>
     </div>
-    <!-- script part -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script type="module" src="../js/ceoUser.js"></script>
-    <script>
-        function signUp() {
-            try {
-                const data = {
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                    confirm: $('#passwordConfirm').val(),
-                    storeName: $('#storeName').val(),
-                    storeImage: $('#storeImage').val()
-                }
-                console.log(data)
-                axios.post('http://localhost:3000/api/ceo/signup', data)
-                    .then(data => console.log(data.data))
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    </script>
 </body>
 
 </html>
+
+
+    
