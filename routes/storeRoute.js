@@ -15,6 +15,7 @@ const router = express.Router();
 // 1. 사장님 회원 가입 API
 router.post('/ceo/signup', async (req, res) => {
     // email, password, confirm, storeName, storeImage
+    console.log(req.body)
     const { email, password, confirm, storeName, storeImage } = req.body;
 
     const validEmailCheck = (string) => {
