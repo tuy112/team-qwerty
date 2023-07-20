@@ -59,23 +59,35 @@ router.post('/signup', async (req, res) => {
 
 // log-in API (POST)
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
 
-  try {
-    const existUser = await Users.findOne({ where: { email } });
-    const passwordMatch = await bcrypt.compare(password, existUser.password);
-    if (!existUser || !passwordMatch) {
-      return res.status(412).json({ message: 'email 또는 비밀번호를 확인해주세요.' });
-    }
-    // JWT 생성
-    const token = jwt.sign({ userId: existUser.userId }, 'customized_secret_key');
-    // Cookie 발급
-    res.cookie('authorization', `Bearer ${token}`);
-    return res.status(200).json({ message: 'log-in 되었습니다.' });
-  } catch {
-    return res.status(400).json({ message: 'log-in에 실패하였습니다.' });
+  const { email, password } = req.body;
+  const existUser = await Users.findOne({ where: { email } });
+
+  // // const passwordMatch = await bcrypt.compare(password, existUser.password);
+  // // console.log(passwordMatch)
+  
+  try{
+  if(!req.body) {
+    return res.status(404).json({ message: "입력값이 존재하지 않습니다." })
   }
+
+  if (!existUser) {  //!passwordMatch
+  return res.status(412).json({ message: 'email 또는 비밀번호를 확인해주세요.' });
+  }
+
+  // JWT 생성
+  const token = jwt.sign({ userId: existUser.userId }, 'customized_secret_key');
+
+  // Cookie 발급
+  res.cookie('authorization', `Bearer ${token}`);
+  return res.status(200).json({ message: 'log-in 되었습니다.' });
+
+}catch(error){
+  console.log(error);
+  return res.status(400).json({ message: 'log-in에 실패하였습니다.' });
+}
 });
+
 
 // log-out API (POST)
 router.post('/logout', authMiddleware, async (req, res) => {
@@ -87,13 +99,14 @@ router.post('/logout', authMiddleware, async (req, res) => {
   }
 });
 
+
 // 사용자 정보 조회 API (GET)
 router.get('/users/:userId', authMiddleware, async (req, res) => {
   const { userId } = res.locals.user;
 
   try {
     const user = await Users.findOne({
-      attributes: ['userId', 'email', 'point', 'createdAt', 'updatedAt'],
+      attributes: ['userId', 'email', 'point', 'createdAt'],
       where: { userId },
     });
     return res.status(200).json({ data: user });
