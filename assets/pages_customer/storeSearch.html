@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- css -->
+  <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/customer.css">
 
   <title>내배캠 최고 평점 영화</title>
@@ -16,15 +17,33 @@
 </head>
 
 <body>
-  <header>
-    <h1>내배캠 최고 평점 영화 콜렉션</h1>
+  <div id="wrap">
+    <!-- header -->
+    <header id="header">
+      <div class="inner">
+          <h1><a href="../pages_ceo/index.html">Qwerty's Delivery - 고객용</a></h1>
+
+          <div class="searchWrap">
+              <input type="text" placeholder="음식점을 입력해주세요"/>
+              <button class="search">검색</button>
+          </div>
+      </div>
   </header>
-  <div id="search-form">
-    <label>영화 검색 : </label>
-    <input name="searchValue" type="text" id="search-input" placeholder="영화 제목을 검색해 보세요" />
-    <button type="submit" id="search-btn">검색</button>
+
+    <section id="subVisual"></section>
+
+    <main id="container" class="main">
+      <section id="content">
+          
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="inner">
+        <p>made by team.qwerty</p>
+      </div>
+    </footer>
   </div>
-  <ul id="card-list"></ul>
 </body>
 
 </html>
