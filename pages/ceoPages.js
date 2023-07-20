@@ -6,7 +6,7 @@ const router = express.Router();
 // => localhost:3000/
 // 1. 메인페이지
 router.route('/').get((req, res) => {
-    return res.render('./pages_ceo/index.html');
+    return res.render('./index.html');
   });
 
 // => localhost:3000/ceo
