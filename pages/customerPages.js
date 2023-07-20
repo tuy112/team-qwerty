@@ -10,7 +10,7 @@ router.route('/storeSearch').get((req, res) => {
 
 // => localhost:3000/register
 // 2. 고객 회원가입 페이지
-router.route('/register').get((req, res) => {
+router.route('/user/register').get((req, res) => {
   return res.render('pages_customer/register.html');
 });
 
@@ -46,7 +46,7 @@ router.route('/review').get((req, res) => {
 
 // => localhost:3000/customerLogin
 // 8. 고객 로그인페이지
-router.route('/customerLogin').get((req, res) => {
+router.route('/user/login').get((req, res) => {
   return res.render('pages_customer/login.html');
 });
 
