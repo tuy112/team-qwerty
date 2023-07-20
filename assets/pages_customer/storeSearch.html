@@ -6,13 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- css -->
+  <title>Qwerty's Delivery</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/customer.css">
 
-  <title>내배캠 최고 평점 영화</title>
-
-  <!-- javascript -->
+  <!-- head js part -->
   <script src="../js/tmdb.js" type="module"></script>
 </head>
 
@@ -21,20 +19,28 @@
     <!-- header -->
     <header id="header">
       <div class="inner">
-          <h1><a href="../pages_ceo/index.html">Qwerty's Delivery - 고객용</a></h1>
+          <h1><a href="../index.html">Qwerty's Delivery - 고객용</a></h1>
+
+          <nav class="nav">
+            <ul class="gnb">
+                <li><a href="#">로그인</a></li>
+                <li><a href="#">회원가입</a></li>
+                <li><a href="#">회원정보</a></li>
+            </ul>
+          </nav>
 
           <div class="searchWrap">
               <input type="text" placeholder="음식점을 입력해주세요"/>
               <button class="search">검색</button>
           </div>
       </div>
-  </header>
+    </header>
 
     <section id="subVisual"></section>
 
     <main id="container" class="main">
       <section id="content">
-          
+        <ul id="card-list"></ul>
       </section>
     </main>
 

@@ -4,6 +4,28 @@
     height: 200px;
     background: #ededed;
 }
+.visual {
+    display: flex;
+}
+.visual .txtWrap {
+    padding: 20px;
+}
+.visual .txtWrap p {
+    /* font-size: 10px; */
+    text-align: center;
+    font-weight: 300;
+}
+.visual .txtWrap h3 {
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 25px;
+}
+.visual .imgWrap {}
+.visual .imgWrap img {
+    width: 261.5px;
+    height: 200px;
+}
 
 /* ================================ */
 
