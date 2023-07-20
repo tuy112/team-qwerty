@@ -1,10 +1,9 @@
 const express = require('express');
+const session = require('express-session'); // Session
 const app = express();
 const port = 3000; // HTML, CSS
 
 const path = require('path');
-const dotenv = require('dotenv');
-dotenv.config(); // => '.env'에서 환경 변수를 불러옵니다.
 
 // cookie parser
 const cookieParser = require('cookie-parser');
@@ -20,10 +19,17 @@ const UsersReviewRouter = require('./routes/usersRoute.js');
 const customerRouter = require('./pages/customerPages.js');
 const ceoRouter = require('./pages/ceoPages.js');
 
-// Middleware ==================================================w
+// Middleware
 app.use(express.json()); // req.body parser
 app.use(cookieParser()); // cookie parser
-app.use(express.urlencoded({ extended: false })); // URL-encoded 형식의 요청 본문 Parsing
+app.use(express.urlencoded({extended: false})); // URL-encoded 형식의 요청 본문 Parsing
+app.use(
+  session({
+    secret: 'team_querty', // Session을 암호화하는데 사용되는 임의의 문자열
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
 // HTML 형태의 응답(response)을 반환하는 API
 app.use(customerRouter, ceoRouter);
@@ -31,18 +37,16 @@ app.use(customerRouter, ceoRouter);
 // localhost:3000/api/
 app.use('/api', [storeRouter, checkRouter, menuRouter, UsersRouter, UsersOrderRouter, UsersReviewRouter]);
 
-// Middleware ==================================================
-
 // HTML, CSS
 app.use(express.static(path.join(__dirname, 'assets')));
 app.set('views', path.join(__dirname, 'assets'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'assets', 'index.html'));
+  res.sendFile(path.join(__dirname, 'assets', 'index.html'));
 });
 
 // server start
 app.listen(port, () => {
-    console.log(port, '포트가 열렸습니다~^^');
+  console.log(port, '포트가 열렸습니다~^^');
 });
