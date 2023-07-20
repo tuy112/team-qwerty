@@ -1,24 +1,24 @@
 const express = require('express');
 const app = express();
-const port = 3000;// HTML, CSS
+const port = 3000; // HTML, CSS
 
 const path = require('path');
-const dotenv = require('dotenv')
-dotenv.config() // => '.env'에서 환경 변수를 불러옵니다.
+const dotenv = require('dotenv');
+dotenv.config(); // => '.env'에서 환경 변수를 불러옵니다.
 
 // cookie parser
-const cookieParser = require("cookie-parser");
+const cookieParser = require('cookie-parser');
 
-const storeRouter = require("./routes/storeRoute.js");
-const checkRouter = require("./routes/checkRoute.js");
-const menuRouter = require("./routes/menuRoute.js");
+const storeRouter = require('./routes/storeRoute.js');
+const checkRouter = require('./routes/checkRoute.js');
+const menuRouter = require('./routes/menuRoute.js');
 
-const UsersRouter = require("./routes/usersOrdersRoute.js");
-const UsersOrderRouter = require("./routes/usersReviewsRoute.js");
-const UsersReviewRouter = require("./routes/usersRoute.js");
+const UsersRouter = require('./routes/usersOrdersRoute.js');
+const UsersOrderRouter = require('./routes/usersReviewsRoute.js');
+const UsersReviewRouter = require('./routes/usersRoute.js');
 
-const customerRouter = require("./pages/customerPages.js");
-const ceoRouter = require("./pages/ceoPages.js");
+const customerRouter = require('./pages/customerPages.js');
+const ceoRouter = require('./pages/ceoPages.js');
 
 // Middleware ==================================================w
 app.use(express.json()); // req.body parser
@@ -34,15 +34,15 @@ app.use('/api', [storeRouter, checkRouter, menuRouter, UsersRouter, UsersOrderRo
 // Middleware ==================================================
 
 // HTML, CSS
-app.use(express.static(path.join(__dirname, 'assets'))); 
+app.use(express.static(path.join(__dirname, 'assets')));
 app.set('views', path.join(__dirname, 'assets'));
 app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile); 
+app.engine('html', require('ejs').renderFile);
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'assets', 'index.html'));
+    res.sendFile(path.join(__dirname, 'assets', 'index.html'));
 });
 
 // server start
 app.listen(port, () => {
-  console.log(port, '포트가 열렸습니다~^^');
+    console.log(port, '포트가 열렸습니다~^^');
 });
