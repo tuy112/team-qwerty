@@ -40,4 +40,3 @@ function emailSenderHandler() {
         console.log('전송 실패');
     }
   }
-}

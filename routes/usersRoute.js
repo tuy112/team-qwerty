@@ -97,6 +97,89 @@ router.post('/logout', authMiddleware, async (req, res) => {
   }
 });
 
+
+// 음식점 조회 API (GET)
+router.get('/user/stores', async (req, res) => {
+  try {
+    const stores = await Stores.findAll({
+      attributes: ['storeId', 'storeImage', 'storeName', 'totalRating'],
+      order: [['totalRating', 'DESC']],
+    });
+    return res.status(200).json(stores);
+  } catch {
+    return res.status(400).json({ message: '음식점 조회에 실패하였습니다.' });
+  }
+});
+
+
+
+// 고객 메뉴조회 API (GET)
+router.get('/user/:storeId/getMenuAll', async (req, res) => {
+  const {storeId} = req.params;
+  try{
+  if(!storeId) {
+    res.status(404).json({message:'음식점 조회에 실패하였습니다.'})
+  }
+  const menus = await Menus.findAll({
+    attributes: ['menuId','StoreId', 'menuName',"menuImage", 'price', 'createdAt'],
+    order: [['createdAt', 'DESC']],
+  });
+
+  const result = menus.map((item) => {
+    return {
+      menuId: item.menuId,
+      StoreId: item.StoreId,
+      menuName: item.menuName,
+      menuImage: item.menuImage,
+      price: item.price,
+      createdAt: item.createdAt,
+    }
+  });
+  res.status(200).json({menus: result})
+  }catch(error){
+    console.log(error);
+    res.status(400).json({message: "요청을 정상적으로 받아들이지 못했습니다."})
+  }
+})
+
+
+// e-mail 인증 API (POST)
+router.post('/user/signup/email', async (req, res) => {
+  console.log(req.body);
+  const { email } = req.body;
+  console.log(email);
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 587,
+      host: 'smtp.gmail.com',
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: 'electruc0095@gmail.com',
+        pass: 'yfjlkxwnfxkjxmed',
+      },
+    });
+
+    const min = 100000;
+    const max = 999999;
+    const verifyNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Session에 verifyNumber 저장
+    req.session.verifyNumber = verifyNumber;
+
+    transporter.sendMail({
+      from: '쿼티의 민족',
+      to: email,
+      subject: '[쿼티의 민족] 반갑습니다! 인증번호를 보내드립니다.',
+      text: `우측의 6자리 인증번호를 '인증번호 입력란'에 입력해주세요! => ${verifyNumber}`,
+    });
+    return res.status(200).json({ message: '전송 성공' });
+  } catch {
+    return res.status(400).json({ message: '전송 실패' });
+  }
+});
+
 // 사용자 정보 조회 API (GET)
 router.get('/users/:userId', authMiddleware, async (req, res) => {
   const {userId} = res.locals.user;
