@@ -1,46 +1,6 @@
-:root {
-    --bg-header-color: #ffe194;
-    --bg-card-color: bisque;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background: url("../images/bg.png") center/cover no-repeat;
-    min-height: 100vh;
-}
-
-header {
-    background-color: var(--bg-header-color);
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#search-form {
-    text-align: center;
-    padding: 20px 0;
-    border-bottom: 1px solid black;
-}
-
-#search-form label {
-    font-size: 25px;
-}
-
-#search-form input {
-    margin-left: 20px;
-    min-width: 200px;
-    padding: 5px 10px;
-}
-
-#search-form button {
-    margin-left: 10px;
-    padding: 5px;
+#header h1 {
+  color: #fff;
+  font-weight: 600;
 }
 
 #card-list {
@@ -120,22 +80,5 @@ header {
     left: 0;
     margin-bottom: 0;
     width: 100%;
-  }
-  
-  @media screen and (min-width: 576px) {
-    .alert {
-      width: fit-content;
-      max-width: 480px;
-    }
-  }
-  
-  .alert-sparta {
-    color: #e8344e;
-    background-color: #ffe7ff;
-    border-color: #ffcde7;
-  }
-  
-  .alert-sparta .alert-link {
-    color: #360000;
   }
   
