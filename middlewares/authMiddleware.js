@@ -1,3 +1,5 @@
+// 고객 미들웨어
+
 const jwt = require("jsonwebtoken")
 const { Users } = require("../models")
 

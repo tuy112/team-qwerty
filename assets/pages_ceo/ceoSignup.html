@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/ceo.css">
 </head>
 <body>
-    <form class="login">
+    <form class="login" action="/storeRoute" method="post">
         <h2>사장님 회원가입</h2>
         <div class="login login_id">
             <h4>account_circle</h4>
@@ -31,11 +31,8 @@
             <input type="image" name="storeImage" id="storeImage" placeholder="가게사진">
         </div>
         <div class="submit">
-            <button class="signupBtn" id="signup" onclick="signupPart();">회원가입 완료</button>
+            <input type="submit" value="submit">
         </div>
     </form>
-
-    <!-- script part -->
-    <script src="./js/ceoUser.js"></script>
 </body>
 </html>
