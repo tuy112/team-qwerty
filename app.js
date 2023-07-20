@@ -4,8 +4,6 @@ const app = express();
 const port = 3000; // HTML, CSS
 
 const path = require('path');
-const dotenv = require('dotenv');
-dotenv.config(); // => '.env'에서 환경 변수를 불러옵니다.
 
 // cookie parser
 const cookieParser = require('cookie-parser');
