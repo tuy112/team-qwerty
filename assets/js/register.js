@@ -39,4 +39,5 @@ function emailSenderHandler() {
     } catch {
         console.log('전송 실패');
     }
+  }
 }

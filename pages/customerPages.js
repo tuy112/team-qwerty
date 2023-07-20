@@ -44,4 +44,10 @@ router.route('/review').get((req, res) => {
     return res.render('pages_customer/review.html');
 });
 
+// => localhost:3000/customerLogin
+// 8. 고객 로그인페이지
+router.route('/customerLogin').get((req, res) => {
+  return res.render('pages_customer/login.html');
+});
+
 module.exports = router;
