@@ -39,7 +39,7 @@
                 <input type="file" name="storeImage" id="storeImage" placeholder="가게사진">
             </div>
             <div class="submit">
-                <input type="submit" value="submit" onclick="signUp();">
+                <input type="button" class="btn" value="회원가입 완료" onclick="signUp();">
             </div>
         </form>
     </div>
@@ -49,26 +49,24 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
         function signUp() {
-            try {
-                const data = {
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                    confirm: $('#passwordConfirm').val(),
-                    storeName: $('#storeName').val(),
-                    storeImage: $('#storeImage').val()
-                }
-                console.log(data)
-                axios.post('http://localhost:3000/api/ceo/signup', data)
-                .then(response =>{
-                    // 회원가입 성공 시
-                    if (response.data.success) {
-                        alert('회원가입이 완료되었습니다. 사장님!');
-                        window.location.href = './ceo.html';
-                    }
-                })
-            } catch (error) {
-                console.log(error)
+            const data = {
+                email: $('#email').val(),
+                password: $('#password').val(),
+                confirm: $('#passwordConfirm').val(),
+                storeName: $('#storeName').val(),
+                storeImage: $('#storeImage').val()
             }
+            console.log(data)
+            axios.post('http://localhost:3000/api/ceo/signup', data)
+            .then(response =>{
+                // 회원가입 성공 시
+                alert('회원가입이 완료되었습니다. 사장님!');
+                location.href = './ceo.html';
+            })
+            .catch(function (error) {
+                alert('회원가입에 실패하였습니다. 다시 돌아가주세요^^');
+                location.href = './ceoSignup.html';
+            })
         }
     </script>
 </body>

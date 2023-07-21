@@ -21,22 +21,23 @@
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
-        try {
-                const data = {
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                    confirm: $('#passwordConfirm').val(),
-                    storeName: $('#storeName').val(),
-                    storeImage: $('#storeImage').val()
-                }
-                console.log(data)
-                axios.get('http://localhost:3000/api/storeInfoList', data)
-                .then(response =>{
-                    document.getElementById("loginInfo").innerHTML = data ; 
-                })
-            } catch (error) {
-                console.log(error)
-            }
+        const data = {
+            email: $('#email').val(),
+            password: $('#password').val(),
+            confirm: $('#passwordConfirm').val(),
+            storeName: $('#storeName').val(),
+            storeImage: $('#storeImage').val()
+        };
+
+        console.log(data);
+
+        axios.get('http://localhost:3000/api/storeInfoList', { params: data })
+            .then(response => {
+                document.getElementById("loginInfo").innerHTML = JSON.stringify(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     </script>
 </body>
 </html>

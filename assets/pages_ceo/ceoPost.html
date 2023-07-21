@@ -30,8 +30,7 @@
             </div>
 
             <div class="submitBtn">
-                <button type="submit" class="btn" onclick="menuPost();">음식등록</button>
-                <button type="submit" class="btn" onclick="menuChange();">음식수정</button>
+                <input type="button" class="btn" value="음식추가" onclick="menuPost();">
             </div>
         </form>
     </div>
@@ -41,36 +40,20 @@
     <script>
         // 메뉴 추가
         function menuPost() {
-            try {
-                const data = {
-                    menuName: $('#menuName').val(),
-                    menuImage: $('#menuImage').val(),
-                    price: $('#price').val(),
-                }
-                console.log(data)
-                axios.post('http://localhost:3000/api/ceo/addMenu', data)
-                    .then(request => {
-                        alert('얼럿');
-                    })
-            } catch (error) {
-                console.log(error)
+            const data = {
+                menuName: $('#menuName').val(),
+                menuImage: $('#menuImage').val(),
+                price: $('#price').val(),
             }
-        }
-
-        // 메뉴 수정
-        function menuChange() {
-            try {
-                const data = {
-                    menuName: $('#menuName').val(),
-                    menuImage: $('#menuImage').val(),
-                    price: $('#price').val(),
-                }
-                console.log(data)
-                axios.post('http://localhost:3000/api/ceo/updateMenu/:menuId', data)
-                    .then(data => console.log(data.data))
-            } catch (error) {
-                console.log(error)
-            }
+            console.log(data)
+            axios.post('http://localhost:3000/api/ceo/addMenu', data)
+            .then(request => {
+                console.log(data);
+                alert('음식등록완료!');
+                location.href = './ceo.html';
+            }).catch(function (error) {
+            console.log(error);
+            })
         }
     </script>
 </body>

@@ -8,8 +8,8 @@ const upload = require('../middlewares/ImgUploadMiddleware.js');
 // 1. 사장님 회원 가입 API
 router.post('/ceo/signup', upload.single('image'), async (req, res) => {
     console.log(req.body)
-    const { email, password, confirm, storeName } = req.body;
-    const storeImage = req.file.location
+    const { email, password, confirm, storeName, storeImage } = req.body;
+    // const storeImage = req.file.location
 
     const validEmailCheck = (string) => {
         const pattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.[A-Za-z]+$/;
@@ -47,6 +47,7 @@ router.post('/ceo/signup', upload.single('image'), async (req, res) => {
 // 2. 사장님 로그인 API
 router.post('/ceo/login', async (req, res) => {
     const { email, password } = req.body;
+    console.log(email, password);
     const ceoCheck = await Stores.findOne({
         where: { email: email },
     });
@@ -120,8 +121,8 @@ router.get('/ceo/list', async (req, res) => {
 // 5. 사장님 가게 정보 수정 API. 개발용. 개발 완료시 삭제할 것
 router.put('/ceo/:storeId', upload.single('image'), async (req, res) => {
     const { storeId } = req.params;
-    const { storeName } = req.body;
-    const storeImage = req.file.location
+    const { storeName, storeImage } = req.body;
+    // const storeImage = req.file.location
 
     const ceoIdToUpdate = await Stores.findOne({
         where: { storeId: storeId },
@@ -164,5 +165,13 @@ router.delete('/ceo/:storeId', async (req, res) => {
         });
     }
 });
+
+// 7. 로그아웃 기능
+router.post('/ceo/logout', (req, res) => {
+    // 쿠키 삭제
+    res.clearCookie('authorization');
+    
+    return res.status(200).json({ message: '로그아웃되었습니다.' });
+    });
 
 module.exports = router;

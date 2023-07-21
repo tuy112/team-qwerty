@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="wrap">
-        <form class="login">   <!-- action="/storeRoute" method="post" -->
+        <form class="login">
             <h2>사장님 로그인</h2>  
             <div class="login login_id">
                 <h4>Your Email</h4>
@@ -23,7 +23,7 @@
                 <input type="password" name="pw" id="password" placeholder="Password">
             </div>
             <div class="submit">
-                <input type="submit" value="submit" onclick="login();">
+                <input type="button" class="btn" value="로그인하기" onclick="login();">
             </div>
         </form>
     </div>
@@ -33,23 +33,21 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
         function login() {
-            try {
-                const data = {
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                }
-                axios.post('http://localhost:3000/api/ceo/login', data)
-                    .then(response => {
-                        alert('사장님 어서오세요');
-                        location.href = './ceo.html';
-                    })
-                    .catch(error => {
-                        alert('회원이 아닙니다'); // 로그인 실패 시 얼럿 메시지 표시
-                        console.log(error);
-                    });
-                } catch (error) {
-                    console.log(error);
-                };
+            const data = {
+                email: $('#email').val(),
+                password: $('#password').val(),
+            }
+            axios.post('http://localhost:3000/api/ceo/login', data)
+            .then(response => {
+                console.log(data);
+                alert('사장님 어서오세요');
+                location.href = './ceo.html';
+            
+            })
+            .catch(error => {
+                alert('회원이 아닙니다'); // 로그인 실패 시 얼럿 메시지 표시
+                console.log(error);
+            });
         };
     </script>
 </body>

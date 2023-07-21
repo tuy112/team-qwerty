@@ -74,13 +74,26 @@
     margin-top: 5px;
     box-shadow: none;
 }
-
-.deleteBtn {
-    background: #ff0044;
+.changeBtn {
+    background: #ff7f00;
     color: #fff;
     border-radius: 5px;
     transition: 0.7s;
     font-size: 4px;
+    cursor: pointer;
+}
+.deleteBtn {
+    background: #f04;
+    color: #fff;
+    border-radius: 5px;
+    transition: 0.7s;
+    font-size: 4px;
+    cursor: pointer;
+}
+.changeBtn:hover {
+    background: #fff;
+    color: #ff7f00;
+    font-weight: 600;
 }
 .deleteBtn:hover {
     background: #fff;
@@ -90,7 +103,7 @@
 
 
 /* ===================================== */
-/* ceoPost.html */
+/* ceoPost.html + login + signup */
 form {
     margin: 0 auto;
     width: 400px;
@@ -124,6 +137,16 @@ form .submitBtn button {
     transition: 0.3s;
 }
 form .submitBtn button:hover {
+    background: #333;
+    color: #fff;
+}
+.btn {
+    background: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+.btn:hover {
     background: #333;
     color: #fff;
 }
