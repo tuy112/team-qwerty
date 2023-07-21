@@ -69,8 +69,17 @@
         })
     }
 
+    function renderStoreCard(storeList) {
+      const StoreCardList = document.querySelector("#card-list");
+
+      StoreCardList.innerHTML = storeList.map(() => {
+        return '안녕하세요'
+      }).join('')
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
-      getStores()
+      const storeCards = await getStores()
+      renderStoreCard(storeCards)
     })
 
       // const getTopRatedMovies = async (searchWord) => {

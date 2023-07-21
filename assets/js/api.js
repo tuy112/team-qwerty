@@ -1,4 +1,5 @@
-const socket = io.connect('/');
+// socket  미구현
+// const socket = io.connect('/');
 
 socket.on('BUY_GOODS', function (data) {
     const { nickname, goodsId, goodsName, date } = data;
