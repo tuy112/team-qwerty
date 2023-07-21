@@ -130,7 +130,6 @@ router.put('/ceo/:storeId', upload.single('image'), async (req, res) => {
     }
 
     try {
-        // 적용하는 부분
         await Stores.update({storeName:storeName, storeImage:storeImage}, {where:{storeId:storeId}})
         return res.status(200).json({ message: '가게 정보가 수정되었습니다.' });
     } catch (error) {
