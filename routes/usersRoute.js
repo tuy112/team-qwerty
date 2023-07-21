@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 // Middleware
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const authMiddleware = require('../middlewares/cusAuthMiddleware.js');
 
 // JWT
 const jwt = require('jsonwebtoken');

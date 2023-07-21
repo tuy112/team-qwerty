@@ -1,12 +1,14 @@
 const express = require('express');
 const { Stores, Menus } = require('../models');
-const authMiddleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/ceoAuthMiddleware');
+const upload = require('../middlewares/ImgUploadMiddleware.js');
 const router = express.Router();
 
 // <사장님> 음식 등록_POST
-router.post('/ceo/addMenu', authMiddleware, async (req, res) => {
+router.post('/ceo/addMenu', authMiddleware, upload.single('image'), async (req, res) => {
     const { storeId } = res.locals.user;
-    const { menuName, menuImage, price } = req.body;
+    const { menuName, price } = req.body;
+    const imageUrl = req.file.location;
 
     if (!storeId) {
         res.status(403).json({ errorMessage: '로그인 후 사용 가능합니다.' });
@@ -24,7 +26,7 @@ router.post('/ceo/addMenu', authMiddleware, async (req, res) => {
     try {
         const addMenu = await Menus.create({
             menuName,
-            menuImage,
+            menuImage: imageUrl,
             price,
             StoreId: storeId,
         });
@@ -52,10 +54,11 @@ router.get('/ceo/getMenuAll', async (req, res) => {
 });
 
 // <사장님> 음식 수정_PUT
-router.put('/ceo/updateMenu/:menuId', authMiddleware, async (req, res) => {
+router.put('/ceo/updateMenu/:menuId', authMiddleware, upload.single('image'), async (req, res) => {
     const { menuId } = req.params;
     const { storeId } = res.locals.user;
-    const { menuName, menuImage, price } = req.body;
+    const { menuName, price } = req.body;
+    const imageUrl = req.file.location;
 
     try {
         const menu = await Menus.findOne({
@@ -71,7 +74,7 @@ router.put('/ceo/updateMenu/:menuId', authMiddleware, async (req, res) => {
             return res.status(404).json({ errorMessage: '메뉴를 찾을 수 없습니다.' });
         }
 
-        await Menus.update({ menuName, menuImage, price }, { where: { menuId: menuId } });
+        await Menus.update({ menuName, menuImage: imageUrl, price }, { where: { menuId: menuId } });
 
         return res.status(200).json({ message: '메뉴 수정을 완료하였습니다.' });
     } catch (error) {

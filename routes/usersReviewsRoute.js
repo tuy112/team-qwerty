@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // Middleware
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const authMiddleware = require('../middlewares/cusAuthMiddleware.js');
 const upload = require('../middlewares/upload-middleware.js');
 
 // Model
