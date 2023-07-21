@@ -53,6 +53,8 @@ router.get('/ceo/getMenuAll', async (req, res) => {
     }
 });
 
+
+
 // <사장님> 음식 수정_PUT
 router.put('/ceo/updateMenu/:menuId', authMiddleware, upload.single('image'), async (req, res) => {
     const { menuId } = req.params;

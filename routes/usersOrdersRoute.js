@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/cusAuthMiddleware.js');
 
-const { Orders, OrderMenus, Users, sequelize } = require('../models/index.js');
+const { Orders, OrderMenus, Users, sequelize, Stores, Menus } = require('../models/index.js');
 const { Op, Sequelize, Transaction, QueryTypes } = require('sequelize');
+
+
+
 
 // 1. 고객 주문 생성 (POST)
 router.post('/user/order', authMiddleware, async (req, res) => {
