@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bcrypt = require('bcrypt');
-const nodemailer = require('../config/email.js');
+const nodemailer = require('nodemailer');
 const router = express.Router();
 
 // Middleware
@@ -18,29 +18,21 @@ const { Op } = require('sequelize');
 
 // 회원가입 API (POST)
 router.post('/user/signup', async (req, res) => {
-  console.log('Hello, Server!');
   console.log('req.body =>', req.body);
-  
   const { email, verifyNumberInput, password, passwordConfirm } = req.body;
 
   try {
     const existUserEmail = await Users.findOne({ where: { email } });
     const passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    emailVerifyHandler = () => {
-      try {
-        const verifyNumber = emailSender.sendGmail(email);
-        res.status(200).json({ message: '전송 성공' });
-        return verifyNumber;
-      } catch {
-        res.status(400).json({ message: '전송 실패' });
-      }
-    };
+    console.log('hashedPassword =>', hashedPassword);
 
     if (!email || !verifyNumberInput || !password || !passwordConfirm) {
       return res.status(400).json({ message: '입력값이 유효하지 않습니다.' });
     }
+    // Session에서 verifyNumber 조회
+    const verifyNumber = req.session.verifyNumber;
+    console.log('verfifyNumber of Session =>', verifyNumber);
     if (verifyNumberInput != verifyNumber) {
       return res.status(412).json({ message: '인증번호가 일치하지 않습니다.' });
     }
@@ -54,10 +46,49 @@ router.post('/user/signup', async (req, res) => {
       return res.status(412).json({ message: '비밀번호가 일치하지 않습니다.' });
     }
 
-    await Users.create({ email, password: hashedPassword, point });
+    await Users.create({ email: email, password: hashedPassword });
+    // 사용한 verifyNumber 삭제
+    delete req.session.verifyNumber;
     return res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
   } catch {
     return res.status(400).json({ message: '사용자 계정 생성에 실패하였습니다.' });
+  }
+});
+
+// e-mail 인증 API (POST)
+router.post('/user/signup/email', async (req, res) => {
+  console.log(req.body);
+  const { email } = req.body;
+  console.log(email);
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 587,
+      host: 'smtp.gmail.com',
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: 'electruc0095@gmail.com',
+        pass: 'yfjlkxwnfxkjxmed',
+      },
+    });
+
+    const min = 100000;
+    const max = 999999;
+    const verifyNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Session에 verifyNumber 저장
+    req.session.verifyNumber = verifyNumber;
+
+    transporter.sendMail({
+      from: '쿼티의 민족',
+      to: email,
+      subject: '[쿼티의 민족] 반갑습니다! 인증번호를 보내드립니다.',
+      text: `우측의 6자리 인증번호를 '인증번호 입력란'에 입력해주세요! => ${verifyNumber}`,
+    });
+    return res.status(200).json({ message: '전송 성공' });
+  } catch {
+    return res.status(400).json({ message: '전송 실패' });
   }
 });
 
@@ -68,46 +99,38 @@ router.post('/login', async (req, res) => {
 
   // // const passwordMatch = await bcrypt.compare(password, existUser.password);
   // // console.log(passwordMatch)
-  
-  try{
-  if(!req.body) {
-    return res.status(404).json({ message: "입력값이 존재하지 않습니다." })
+
+  try {
+    if (!req.body) {
+      return res.status(404).json({ message: '입력값이 존재하지 않습니다.' });
+    }
+
+    if (!existUser) {
+      //!passwordMatch
+      return res.status(412).json({ message: 'email 또는 비밀번호를 확인해주세요.' });
+    }
+
+    // JWT 생성
+    const token = jwt.sign({ userId: existUser.userId }, 'customized_secret_key');
+
+    // Cookie 발급
+    res.cookie('authorization', `Bearer ${token}`);
+    return res.status(200).json({ message: 'log-in 되었습니다.' });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: 'log-in에 실패하였습니다.' });
   }
-
-  if (!existUser) {  //!passwordMatch
-  return res.status(412).json({ message: 'email 또는 비밀번호를 확인해주세요.' });
-  }
-
-  // JWT 생성
-  const token = jwt.sign({ userId: existUser.userId }, 'customized_secret_key');
-
-  // Cookie 발급
-  res.cookie('authorization', `Bearer ${token}`);
-  return res.status(200).json({ message: 'log-in 되었습니다.' });
-
-}catch(error){
-  console.log(error);
-  return res.status(400).json({ message: 'log-in에 실패하였습니다.' });
-}
 });
 
 // log-out API (POST)
 router.post('/logout', authMiddleware, async (req, res) => {
   try {
     res.clearCookie('authorization');
-    return res.status(200).json({message: 'log-out 되었습니다.'});
+    return res.status(200).json({ message: 'log-out 되었습니다.' });
   } catch {
-    return res.status(400).json({message: 'log-out에 실패하였습니다.'});
-    
-    await Users.create({ email: email, password: hashedPassword });
-    // 사용한 verifyNumber 삭제
-    delete req.session.verifyNumber;
-    return res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
-  } catch {
-    return res.status(400).json({ message: '사용자 계정 생성에 실패하였습니다.' });
+    return res.status(400).json({ message: 'log-out에 실패하였습니다.' });
   }
 });
-
 
 // 음식점 조회 API (GET)
 router.get('/user/stores', async (req, res) => {
@@ -122,36 +145,21 @@ router.get('/user/stores', async (req, res) => {
   }
 });
 
-  
 // 고객 메뉴조회 API (GET)
 router.get('/user/:storeId/getMenuAll', async (req, res) => {
-  const {storeId} = req.params;
-  try{
-  if(!storeId) {
-    res.status(404).json({message:'음식점 조회에 실패하였습니다.'})
-  }
-  const menus = await Menus.findAll({
-    attributes: ['menuId','StoreId', 'menuName',"menuImage", 'price', 'createdAt'],
-    order: [['createdAt', 'DESC']],
-  });
-
-  const result = menus.map((item) => {
-    return {
-      menuId: item.menuId,
-      StoreId: item.StoreId,
-      menuName: item.menuName,
-      menuImage: item.menuImage,
-      price: item.price,
-      createdAt: item.createdAt,
-    }
-  });
-  res.status(200).json({menus: result})
-  }catch(error){
+  const { storeId } = req.params;
+  try {
+    const menus = await Menus.findAll({
+      attributes: ['menuId', 'menuName', 'menuImage', 'price'],
+      order: [['menuId', 'DESC']],
+      where: { storeId: storeId },
+    });
+    res.status(200).json(menus);
+  } catch (error) {
     console.log(error);
-    res.status(400).json({message: "요청을 정상적으로 받아들이지 못했습니다."})
+    res.status(400).json({ message: '요청을 정상적으로 받아들이지 못했습니다.' });
   }
-})
-
+});
 
 // e-mail 인증 API (POST)
 router.post('/user/signup/email', async (req, res) => {
