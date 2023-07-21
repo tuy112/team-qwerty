@@ -60,7 +60,7 @@ router.put('/ceo/updateMenu/:menuId', authMiddleware, upload.single('image'), as
     const { menuId } = req.params;
     const { storeId } = res.locals.user;
     const { menuName, price } = req.body;
-    const imageUrl = req.file.location;
+    // const imageUrl = req.file.location;
 
     try {
         const menu = await Menus.findOne({

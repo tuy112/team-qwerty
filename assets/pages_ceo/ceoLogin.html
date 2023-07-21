@@ -38,19 +38,17 @@
                     email: $('#email').val(),
                     password: $('#password').val(),
                 }
-                console.log(data)
                 axios.post('http://localhost:3000/api/ceo/login', data)
                     .then(response => {
-                        // 로그인 성공 시
-                        if (response.data.success) {
-                            alert('사장님 어서오세요');
-                        } else {
-                            // 로그인 실패 시
-                            alert('회원이 아닙니다. 회원가입을 해주세요.');
-                        }
-                    }) 
+                        alert('사장님 어서오세요');
+                        location.href = './ceo.html';
+                    })
+                    .catch(error => {
+                        alert('회원이 아닙니다'); // 로그인 실패 시 얼럿 메시지 표시
+                        console.log(error);
+                    });
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
                 };
         };
     </script>

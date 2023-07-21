@@ -49,7 +49,9 @@
                 }
                 console.log(data)
                 axios.post('http://localhost:3000/api/ceo/addMenu', data)
-                    .then(data => console.log(data.data))
+                    .then(request => {
+                        alert('얼럿');
+                    })
             } catch (error) {
                 console.log(error)
             }
