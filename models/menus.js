@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             // Stores와 Menus는 일대다 관계
             this.belongsTo(models.Stores, {
                 targetKey: 'storeId',
-                foreignKey: 'StoreId',
+                foreignKey: 'storeId',
             });
         }
     }
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 type: DataTypes.INTEGER,
             },
-            StoreId: {
+            storeId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,
             },

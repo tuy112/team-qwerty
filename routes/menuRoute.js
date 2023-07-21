@@ -28,7 +28,7 @@ router.post('/ceo/addMenu', authMiddleware, upload.single('image'), async (req, 
             menuName,
             menuImage: imageUrl,
             price,
-            StoreId: storeId,
+            storeId: storeId,
         });
 
         return res.status(201).json({ data: addMenu });
@@ -42,7 +42,7 @@ router.post('/ceo/addMenu', authMiddleware, upload.single('image'), async (req, 
 router.get('/ceo/getMenuAll', async (req, res) => {
     try {
         const menus = await Menus.findAll({
-            attributes: ['menuId', 'StoreId', 'menuName', 'menuImage', 'price', 'createdAt'],
+            attributes: ['menuId', 'storeId', 'menuName', 'menuImage', 'price', 'createdAt'],
 
             order: [['createdAt', 'DESC']],
         });
@@ -68,7 +68,7 @@ router.put('/ceo/updateMenu/:menuId', authMiddleware, upload.single('image'), as
         });
         console.log(menu);
 
-        if (menu.StoreId !== storeId) {
+        if (menu.storeId !== storeId) {
             return res.status(403).json({ errorMessage: '메뉴를 수정할 권한이 없습니다.' });
         }
 
@@ -96,7 +96,7 @@ router.delete('/ceo/deleteMenu/:menuId', authMiddleware, async (req, res) => {
         });
         console.log(menu);
 
-        if (menu.StoreId !== storeId) {
+        if (menu.storeId !== storeId) {
             return res.status(403).json({ errorMessage: '메뉴를 삭제할 권한이 없습니다.' });
         }
 
