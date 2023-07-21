@@ -5,7 +5,11 @@ const router = express.Router();
 
 // Middleware
 const authMiddleware = require('../middlewares/cusAuthMiddleware.js');
+<<<<<<< HEAD
 const upload = require('../middlewares/ImgUploadMiddleware.js');
+=======
+const upload = require('../middlewares/imgUploadmiddleware.js');
+>>>>>>> kjy
 
 // Model
 const { Reviews } = require('../models/index.js');
