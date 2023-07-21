@@ -2,7 +2,6 @@
 
 const express = require('express');
 const bcrypt = require('bcrypt');
-const nodemailer = require('../config/email.js');
 const router = express.Router();
 
 // Middleware
@@ -98,13 +97,6 @@ router.post('/logout', authMiddleware, async (req, res) => {
     return res.status(200).json({message: 'log-out 되었습니다.'});
   } catch {
     return res.status(400).json({message: 'log-out에 실패하였습니다.'});
-    
-    await Users.create({ email: email, password: hashedPassword });
-    // 사용한 verifyNumber 삭제
-    delete req.session.verifyNumber;
-    return res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
-  } catch {
-    return res.status(400).json({ message: '사용자 계정 생성에 실패하였습니다.' });
   }
 });
 
