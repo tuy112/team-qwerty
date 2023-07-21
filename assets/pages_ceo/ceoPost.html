@@ -7,6 +7,9 @@
     <title>음식 추가, 수정, 삭제</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/ceo.css">
+
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -25,15 +28,16 @@
             </div>
     
             <div class="submitBtn">
-                <button type="submit" onclick="menuPost()">음식등록</button>
+                <button type="submit" onclick="menuPost();">음식등록</button>
+                <button type="submit" onclick="menuChange();">음식수정</button>
             </div>
         </form>    
     </div>
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
     integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script type="module" src="./js/ceoOrder.js"></script>
     <script>
+        // 메뉴 추가
         function menuPost() {
             try {
                 const data = {
@@ -43,6 +47,22 @@
                 }
                 console.log(data)
                 axios.post('http://localhost:3000/api/ceo/addMenu', data)
+                    .then(data => console.log(data.data))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        // 메뉴 수정
+        function menuChange() {
+            try {
+                const data = {
+                    menuName: $('#menuName').val(),
+                    menuImage: $('#menuImage').val(),
+                    price: $('#price').val(),
+                }
+                console.log(data)
+                axios.post('http://localhost:3000/api/ceo/updateMenu/:menuId', data)
                     .then(data => console.log(data.data))
             } catch (error) {
                 console.log(error)

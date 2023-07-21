@@ -44,11 +44,6 @@ router.get('/ceo/getMenuAll', async (req, res) => {
 
             order: [['createdAt', 'DESC']],
         });
-        // 식당 목록이 나오잖아요
-        // 그 식당 중 하나를 클릭하면
-        // 해당 식당이 제공하는 음식 목록이 나오니까
-        // 이 설계는 지금 잘못된것 같아요
-
         return res.status(200).json({ data: menus });
     } catch (error) {
         console.error(error);
