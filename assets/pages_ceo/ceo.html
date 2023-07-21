@@ -104,6 +104,7 @@
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
+        // table db 데이터 값 출력
         try {
                 const data = {
                     menuName: $('#menuName').val(),
@@ -117,9 +118,29 @@
                     document.getElementById("menuImage").innerHTML = data ; 
                     document.getElementById("price").innerHTML = data ;
                 })
+        } catch (error) {
+            console.log(error)
+        }
+
+        // deleteBtn
+        function menuDelete() {
+            try {
+                const data = {
+                    menuName: $('#menuName').val(),
+                    menuImage: $('#menuImage').val(),
+                    price: $('#price').val(),
+                }
+                console.log(data)
+                axios.get('http://localhost:3000/api/ceo/deleteMenu/:menuId', data)
+                .then(response =>{
+                    document.getElementById("menuName").innerHTML = data ; 
+                    document.getElementById("menuImage").innerHTML = data ; 
+                    document.getElementById("price").innerHTML = data ;
+                })
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
+        }
     </script>
 
     
