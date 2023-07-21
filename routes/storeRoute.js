@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { Stores } = require('../models');
 const router = express.Router();
 
+const upload = require('../middlewares/ImgUploadMiddleware.js');
+
 // 1. 사장님 회원 가입 API
 router.post('/ceo/signup', upload.single('image'), async (req, res) => {
     console.log(req.body)
