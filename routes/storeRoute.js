@@ -3,20 +3,11 @@ const jwt = require('jsonwebtoken');
 const { Stores } = require('../models');
 const router = express.Router();
 
-// 내 분담 역할
-// store table
-
-// 연관된 테이블, order(다대일, 담당 상우님),
-// menu(일대다, 담당 지혜님), review(일대다, 담당 재용님)
-
-// DB store table에 등록된 컬럼
-// storeId, email, password, storeName, storeImage, totalRating, createdAt
-
 // 1. 사장님 회원 가입 API
-router.post('/ceo/signup', async (req, res) => {
-    // email, password, confirm, storeName, storeImage
+router.post('/ceo/signup', upload.single('image'), async (req, res) => {
     console.log(req.body)
-    const { email, password, confirm, storeName, storeImage } = req.body;
+    const { email, password, confirm, storeName } = req.body;
+    const storeImage = req.file.location
 
     const validEmailCheck = (string) => {
         const pattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.[A-Za-z]+$/;
@@ -125,10 +116,10 @@ router.get('/ceo/list', async (req, res) => {
 });
 
 // 5. 사장님 가게 정보 수정 API. 개발용. 개발 완료시 삭제할 것
-// 가게 이름이나, 가게 사진
-router.put('/ceo/:storeId', async (req, res) => {
+router.put('/ceo/:storeId', upload.single('image'), async (req, res) => {
     const { storeId } = req.params;
-    const { storeName, storeImage } = req.body;
+    const { storeName } = req.body;
+    const storeImage = req.file.location
 
     const ceoIdToUpdate = await Stores.findOne({
         where: { storeId: storeId },
@@ -138,10 +129,8 @@ router.put('/ceo/:storeId', async (req, res) => {
         return res.status(404).json({ message: 'storeId를 다시 확인해주세요.' });
     }
 
-    // storeName과 storeImage를 받는 부분
-
     try {
-        // 적용하는 부분
+        await Stores.update({storeName:storeName, storeImage:storeImage}, {where:{storeId:storeId}})
         return res.status(200).json({ message: '가게 정보가 수정되었습니다.' });
     } catch (error) {
         console.log(error);
