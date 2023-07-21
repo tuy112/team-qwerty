@@ -6,6 +6,9 @@
     <title>쿼티의민족 사장님 광장</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/ceo.css">
+
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <!-- 본문바로가기 -->
@@ -52,7 +55,7 @@
                             </span>
                         </form>
                             
-                        <table class="menu">
+                        <table class="menu" id="menuTable">
                             <thead>
                               <tr>
                                 <th>메뉴이름</th>
@@ -63,9 +66,9 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td>Lorem</td>
-                                <td>Ipsum</td>
-                                <td>Dolor</td>
+                                <td id="menuName"></td>
+                                <td id="menuImage"></td>
+                                <td id="price"></td>
                                 <td>
                                     <button class="btn deleteBtn" onclick="menuDelete();">메뉴삭제</button>
                                 </td>
@@ -99,7 +102,26 @@
     </div>
 
     <!-- script part -->
-    <script src="../js/ceoOrder.js"></script>
-    <script src="../js/ceoUser.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        try {
+                const data = {
+                    menuName: $('#menuName').val(),
+                    menuImage: $('#menuImage').val(),
+                    price: $('#price').val(),
+                }
+                console.log(data)
+                axios.get('http://localhost:3000/api/ceo/getMenuAll', data)
+                .then(response =>{
+                    document.getElementById("menuName").innerHTML = data ; 
+                    document.getElementById("menuImage").innerHTML = data ; 
+                    document.getElementById("price").innerHTML = data ;
+                })
+            } catch (error) {
+                console.log(error)
+            }
+    </script>
+
+    
 </body>
 </html>
