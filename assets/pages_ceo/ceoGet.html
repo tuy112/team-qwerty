@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사장님 회원정보</title>
+    <link rel="stylesheet" href="../css/reset.css">
 
     <!-- axios -->
     <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <div id="ceoGet"></div>
+    <div id="wrap">
+        <div id="loginInfo"></div>
+    </div>
 
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
-        function signUp() {
-            try {
+        try {
                 const data = {
                     email: $('#email').val(),
                     password: $('#password').val(),
@@ -24,18 +26,13 @@
                     storeImage: $('#storeImage').val()
                 }
                 console.log(data)
-                axios.post('http://localhost:3000/api/storeInfoList', data)
+                axios.get('http://localhost:3000/api/storeInfoList', data)
                 .then(response =>{
-                    // 회원가입 성공 시
-                    if (response.data.success) {
-                        alert('회원가입이 완료되었습니다. 사장님!');
-                        window.location.href = './ceo.html';
-                    }
+                    document.getElementById("loginInfo").innerHTML = data ; 
                 })
             } catch (error) {
                 console.log(error)
             }
-        }
     </script>
 </body>
 </html>
