@@ -69,18 +69,31 @@
         })
     }
 
-    function renderStoreCard(storeList) {
-      const StoreCardList = document.querySelector("#card-list");
+    document.addEventListener("DOMContentLoaded", async () => {
+      getStores()
+    })
 
-      StoreCardList.innerHTML = storeList.map(() => {
-        return '안녕하세요'
-      }).join('')
+    function getStorePage() {
+      location.href = "./store.html";
     }
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      const storeCards = await getStores()
-      renderStoreCard(storeCards)
-    })
+    const StoreCardList = document.querySelector('#card-list');
+    const storeIdSender = async ({ target }) => {
+      if (target === StoreCardList) return;
+
+      if (target.matches('.movie-card')) {
+        alert(target.id);
+        await localStorage.setItem('storeId', target.id)
+        console.log('set storeId =>', localStorage.getItem('storeId'))
+        getStorePage()
+      } else {
+        alert(target.parentNode.id);
+        await localStorage.setItem('storeId', target.parentNode.id)
+        console.log('set storeId =>', localStorage.getItem('storeId'))
+        getStorePage()
+      }
+    };
+    StoreCardList.addEventListener('click', storeIdSender);
 
       // const getTopRatedMovies = async (searchWord) => {
       //   const url = `http://localhost:3000/api/movies?${searchWord ? `searchWord=${searchWord}` : ''}`

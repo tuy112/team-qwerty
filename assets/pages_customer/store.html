@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <!-- axios -->
@@ -7,24 +8,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Qwerty's Delivery</title>
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/customer.css">
 </head>
+
 <body>
   <div id="wrap">
     <!-- header -->
     <header id="header">
       <div class="inner">
         <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
-        <!-- <nav class="nav">
-          <ul class="gnb">
-            <li><a href="./login.html">가게이미지</a></li>
-            <li><a href="./register.html">가게이름</a></li>
-            <li><a href="#">별점</a></li>
-          </ul>
-        </nav> -->
         <div class="searchWrap">
           <input type="text" placeholder="찾으시는 메뉴를 입력해주세요" />
           <button class="search">검색</button>
@@ -34,7 +27,7 @@
     <section id="subVisual"></section>
     <main id="container" class="main">
       <section id="content">
-        <ul id="menu-list"></ul>
+        <ul id="card-list"></ul>
       </section>
     </main>
     <footer id="footer">
@@ -43,74 +36,32 @@
       </div>
     </footer>
   </div>
-
-  <!-- script part -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
-    integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-  <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
-
-  <script src="/api.js"></script>
   <script>
-    const getMenus = async () => {
-      axios.get('http://localhost:3000/api/user/${storeId}/getMenuAll')
+    const getStore = async () => {
+      const storeId = localStorage.getItem('storeId')
+      console.log('get storeId =>', storeId)
+      axios.get(`http://localhost:3000/api/user/${storeId}/getMenuAll`)
         .then(function (response) {
           console.log(response.data);
-          const StoreCardList = document.querySelector("#menu-list");
-          StoreCardList.innerHTML = response.data.map((Menu) => {
-            return `<li class="menu-card" id=${Menu.menuId}>
-                      <p>${Menu.menuName}</p>
-                      <h3 class="menu-title">${Menu.menuImage}</h3>
-                      <p>가격: ${Menu.price}</p>
-                    </li>`
+          const StoreCardList = document.querySelector("#card-list");
+
+          StoreCardList.innerHTML = response.data.map((menu) => {
+            return `<li class="movie-card" id=${menu.menuId}>
+                          <p>${menu.menuImage}</p>
+                          <h3 class="movie-title">${menu.menuName}</h3>
+                          <p>평점: ${menu.price}</p>
+                        </li>`
           }).join('')
         })
-        .catch(function (error) { getMenus
+        .catch(function (error) {
           console.log(error);
         })
     }
     document.addEventListener("DOMContentLoaded", async () => {
-      getMenus()
+      getStore()
     })
-      // const getTopRatedMovies = async (searchWord) => {
-      //   const url = `http://localhost:3000/api/movies?${searchWord ? `searchWord=${searchWord}` : ''}`
-      //   // fetch 함수를 사용하여, 해당 주소(url)로 GET 요청을 보냅니다. 이를 통해 Server에서 영화 목록을 받아옵니다.
-      //   const response = await fetch(url);
-      //   if (response.status !== 200) {
-      //     throw new Error('API call error!')
-      //   }
-      //   // 'response'의 본문을 JSON 형식으로 Parsing하여 반환합니다.
-      //   return await response.json()
-      // };
-      // function renderMovieCard(movieList) {
-      //   const cardList = document.querySelector("#menu-list");
-      //   cardList.innerHTML = movieList.map((movie) => {
-      //     return `<li class="menu-card" id=${movie.id}>
-      //         <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-      //         <h3 class="menu-title">${movie.title}</h3>
-      //         <p>${movie.overview}</p>
-      //         <p>Rating: ${movie.vote_average}</p>
-      //       </li>`
-      //   }).join('')
-      // }
-      // document.addEventListener("DOMContentLoaded", async () => {
-      //   const topRatedMovies = await getTopRatedMovies()
-      //   renderMovieCard(topRatedMovies)
-      //   // 사용자가 검색어를 입력했을 경우, 실행되는 구문입니다.
-      //   const form = document.querySelector("#search-form");
-      //   form.addEventListener("click", async function () {
-      //     const searchWord = document.querySelector("#search-input").value;
-      //     const topRatedMovies = await getTopRatedMovies(searchWord)
-      //     renderMovieCard(topRatedMovies)
-      //   })
-      // })
+
   </script>
 </body>
-</html> 
+
+</html>
