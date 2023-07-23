@@ -82,24 +82,12 @@
     font-size: 4px;
     cursor: pointer;
 }
-.deleteBtn {
-    background: #f04;
-    color: #fff;
-    border-radius: 5px;
-    transition: 0.7s;
-    font-size: 4px;
-    cursor: pointer;
-}
 .changeBtn:hover {
     background: #fff;
     color: #ff7f00;
     font-weight: 600;
 }
-.deleteBtn:hover {
-    background: #fff;
-    color: #f04;
-    font-weight: 600;
-}
+
 
 
 /* ===================================== */

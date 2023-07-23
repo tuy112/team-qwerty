@@ -31,24 +31,6 @@
 
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script>
-        function login() {
-            const data = {
-                email: $('#email').val(),
-                password: $('#password').val(),
-            }
-            axios.post('http://localhost:3000/api/ceo/login', data)
-            .then(response => {
-                console.log(data);
-                alert('사장님 어서오세요');
-                location.href = './ceo.html';
-            
-            })
-            .catch(error => {
-                alert('회원이 아닙니다'); // 로그인 실패 시 얼럿 메시지 표시
-                console.log(error);
-            });
-        };
-    </script>
+    <script src="../js/ceoUsers.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="wrap">
-        <p class="get">Your's Account Infomation ▼</p>
+        <p class="get">Qwerty's Delivery 회원목록 ▼</p>
         <div class="getBox" id="loginInfo"></div>
 
         <button class="homeBtn" onclick="location.href = './ceo.html';">🏚 홈으로</button>
@@ -20,24 +20,6 @@
 
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script>
-        const data = {
-            email: $('#email').val(),
-            password: $('#password').val(),
-            confirm: $('#passwordConfirm').val(),
-            storeName: $('#storeName').val(),
-            storeImage: $('#storeImage').val()
-        };
-
-        console.log(data);
-
-        axios.get('http://localhost:3000/api/storeInfoList', { params: data })
-            .then(response => {
-                document.getElementById("loginInfo").innerHTML = JSON.stringify(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    </script>
+    <script src="../js/ceoUsers.js"></script>
 </body>
 </html>
