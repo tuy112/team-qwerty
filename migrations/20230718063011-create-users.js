@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
- 
+
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       userId: {
@@ -9,11 +9,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        reference: {
-          models: 'Reviews',
-          key: 'userId',
-        },
-        onDelete: 'CASCADE',
       },
       email: {
         allowNull: false,

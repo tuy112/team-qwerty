@@ -1,35 +1,25 @@
 // 고객 미들웨어
 
 const jwt = require('jsonwebtoken');
-const { Users } = require('../models');
+const { Users } = require('../../코딩/NODE/6th Weeks/TeamQwerty/models');
 
 module.exports = async (req, res, next) => {
-    try {
-        const { Authorization } = req.cookies;
-        const [TokenType, Token] = (Authorization ?? '').split(' ');
+  const { authorization } = req.cookies;
+  const [authType, authToken] = (authorization ?? '').split(' ');
 
-        if (TokenType !== 'Bearer') {
-            res.status(403).json({ message: '토큰 타입이 일치하지 않습니다.' });
-        } else if (!Token) {
-            res.status(401).json({ message: '토큰값이 존재하지 않습니다.' });
-        }
-
-        // decoding
-        const DecodedToken = jwt.verify(Token, 'customized-secret-key');
-        const userId = DecodedToken.userId;
-
-        const user = await Users.findOne({ where: { userId } });
-
-        if (!user) {
-            res.clearCookie('Authorization');
-            console.log('!user');
-            return res.status(403).json({ message: '토큰에 해당하는 사용자가 존재하지 않습니다.' });
-        }
-        res.locals.user = user;
-        next();
-    } catch (error) {
-        res.clearCookie('Authorization');
-        console.log(error);
-        return res.status(403).json({ message: '비정상적인 접근입니다.' });
-    }
+  if (!authToken || authType !== 'Bearer') {
+    res.status(401).send({
+      errorMessage: 'Log-In 후 이용 가능한 기능입니다.',
+    });
+    return;
+  }
+  try {
+    const { userId } = jwt.verify(authToken, 'customized-secret-key');
+    const user = await Users.findOne({ where: { userId } });
+    res.locals.user = user;
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(403).json({ message: '비정상적인 접근입니다.' });
+  }
 };

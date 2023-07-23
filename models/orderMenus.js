@@ -1,57 +1,58 @@
-// models/orders
+// models/ordermenus
 
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Orders extends Model {
+  class OrderMenus extends Model {
     static associate(models) {
-      // order모델 - user모델 : N:1 관계
+      // OrderMenu모델 - order모델 : N:1 관계
+      this.belongsTo(models.Orders, {
+        targetKey: 'orderId',
+        foreignKey: 'orderId',
+      });
+
+      // OrderMenu모델 - menu모델 : N:1 관계
+      this.belongsTo(models.Menus, {
+        targetKey: 'menuId',
+        foreignKey: 'menuId',
+      });
+
+      // OrderMenu모델 - Users모델 : N:1 관계
       this.belongsTo(models.Users, {
         targetKey: 'userId',
         foreignKey: 'userId',
-      });
-
-      // // order모델 - store모델 : N:1 관계
-      this.belongsTo(models.Stores, {
-        targetKey: 'storeId',
-        foreignKey: 'storeId',
-      });
-
-      // order모델 -  orderMenu모델 : 1:N 관계
-      this.hasMany(models.OrderMenus, {
-        sourceKey: 'orderId',
-        foreignKey: 'orderId',
-      });
+        });
     }
   }
-  Orders.init(
+
+  OrderMenus.init(
     {
-      orderId: {
+      orderMenuId: {
         allowNull: false, // NOT NULL
         autoIncrement: true, // AUTO_INCREMENT
         primaryKey: true, // Primary Key
-        type: DataTypes.INTEGER,
-      },
-      storeId: {
-        allowNull: false, // NOT NULL
         type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false, // NOT NULL
         type: DataTypes.INTEGER,
       },
-      payAmount: {
+      menuId: {
         allowNull: false, // NOT NULL
         type: DataTypes.INTEGER,
       },
-      address: {
-        allowNull: false, // NOT NULL
-        type: DataTypes.STRING,
-      },
-      delivery: {
+      orderId: {
         allowNull: true, // NULL
-        type: DataTypes.BOOLEAN,
-        default: false,
+        type: DataTypes.INTEGER,
+      },
+      quantity: {
+        allowNull: false, // NOT NULL
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+      },
+      totalPrice: {
+        allowNull: false, // NOT NULL
+        type: DataTypes.INTEGER,
       },
       status: {
         allowNull: true, // NULL
@@ -71,9 +72,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Orders',
+      modelName: 'OrderMenus',
     },
   );
-  return Orders;
+  return OrderMenus;
 };
-

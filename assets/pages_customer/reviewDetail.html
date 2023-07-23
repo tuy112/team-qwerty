@@ -24,13 +24,14 @@
             <!-- storeImage, storeName, totalRating -->
           </div>
           <ul class="gnb">
-            <li><a href="./store.html">Store</a></li>
-            <li><a href="./reviewWrite.html">리뷰작성</a></li>
+            <li><a href="./review">리뷰</a></li>
+            <li><a href="./reviewEdit">리뷰수정</a></li>
+            <li><a href="./reviewWrite">리뷰삭제</a></li>
             <li><a href="javascript:history.back()">뒤로가기</a></li>
           </ul>
         </nav>
         <div class="searchWrap">
-          <input type="text" placeholder="찾으시는 검색어를 입력해주세요" />
+          <input type="text" placeholder="찾으시는 메뉴를 입력해주세요" />
           <button class="search">검색</button>
         </div>
       </div>
@@ -39,8 +40,8 @@
     <main id="container" class="main">
       <section id="content">
         <ul id="card-list"></ul>
-        <!-- 여기에 리뷰 카드가 표시됩니다. (card-list) -->
-        <!-- rating, content  -->
+        <!-- 리뷰가 표시됩니다. (card-list) -->
+        <!-- content, rating  -->
       </section>
     </main>
     <footer id="footer">
@@ -51,7 +52,7 @@
   </div>
   <script>
 
-    // 음식점 정보
+     // 음식점 정보
     const getStoreInfo = async () => {
       const storeId = localStorage.getItem('storeId')
       console.log('get storeId =>', storeId)
@@ -60,7 +61,6 @@
           console.log(response.data);
           const storeInfo = response.data
           const storeCard = document.querySelector("#store-container")
-
           storeCard.innerHTML =
             `<div id="card">
               <p id="storeImage">${storeInfo.storeImage}</p>
@@ -72,58 +72,7 @@
           console.log(error);
         })
     }
-    
-    // 식당 정보를 토대로 리뷰 카드 뿌려줌
-    const getReviews = async () => {
-      const storeId = localStorage.getItem('reviewId')
-      console.log('get storeId =>', storeId)
-      axios.get(`http://localhost:3000/api/user/store/${storeId}/review`)
-        .then(function (response) {
-          console.log(response.data);
-          const StoreCardList = document.querySelector("#card-list");
-    
-          // 리뷰 정보
-        StoreCardList.innerHTML = response.data.map((review) => {
-          return `<li class="movie-card" id=${review.menuId}>
-                    <p>평점: ${review.rating}</p>
-                    <p>${review.content}</p>
-                  </li>`
-          }).join('')
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-    }
-    document.addEventListener("DOMContentLoaded", async () => {
-      getStoreInfo()
-      getReviews()
-    })
 
-// 리뷰 버튼을 눌렀을때 리뷰 상세페이지로 들어감. (reviewId)
-
-function getReviewPage(){
-  location.href = "./review.html"; //
-}
-
-// reviewDetail.html 리뷰상세를 했을때 getItem할수 있도록 setItem해줌
-const menuList = document.querySelector("card-list");
-const reviewIdSender = async ({ target }) => {
-  if(target === menuList) return;
-
-  if (target.matches('.movie-card')){
-    alert(target.id);
-    await localStorage.setItem('reviewId', target.id)
-    console.log('set reviewId =>', localStorage.getItem('reviewId'));
-      getReviewPage()
-  } else {
-    alert(target.parentNode.id);
-    await localStorage.setItem('reviewId', target.parentNode.id)
-    console.log('set reviewId =>', localStorage.getItem('reviewId'));
-      getReviewPage()
-  }
-};
-
-menuList.addEventListener('click', reviewIdSender);
 
 
   </script>

@@ -12,6 +12,11 @@ module.exports = {
             storeId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
+                reference: {
+                    models: 'Stores',
+                    key: 'storeId',
+                },
+                onDelete: 'CASCADE',
             },
             userId: {
                 allowNull: false,
@@ -21,10 +26,6 @@ module.exports = {
                     key: 'userId',
                 },
                 onDelete: 'CASCADE',
-            },
-            image: {
-                allowNull: false,
-                type: Sequelize.STRING,
             },
             rating: {
                 allowNull: false,
