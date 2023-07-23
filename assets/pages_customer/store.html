@@ -10,13 +10,16 @@
   <title>Qwerty's Delivery</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/customer.css">
+
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
   <div id="wrap">
     <!-- header -->
     <header id="header">
-      <div class="inner2">
+      <div class="inner">
         <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
         <nav class="nav">
           <div id="store-container">
@@ -35,7 +38,8 @@
         </div>
       </div>
     </header>
-    <section id="subVisual"></section>
+
+    <!-- main -->
     <main id="container" class="main">
       <section id="content">
         <ul id="card-list"></ul>
@@ -43,33 +47,38 @@
         <!-- menuId, menuImage, menuName, price  -->
       </section>
     </main>
+
+    <!-- footer -->
     <footer id="footer">
       <div class="inner">
         <p>made by team.qwerty</p>
       </div>
     </footer>
   </div>
-  <script>
-    
-    const getStoreInfo = async () => {
-      const storeId = localStorage.getItem('storeId')
-      console.log('get storeId for getStoreInfo =>', storeId)
-      axios.get(`http://localhost:3000/api/user/stores/${storeId}`)
-        .then(function (response) {
-          console.log(response.data);
-          const storeInfo = response.data
-          const storeCard = document.querySelector("#store-container")
 
-          storeCard.innerHTML =
-            `<div id="card">
-              <p id="storeImage">${storeInfo.storeImage}</p>
-              <h3 class="storeName">${storeInfo.storeName}</h3>
-              <p id="totalRating">${storeInfo.totalRating}</p>
-            </div>`
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+
+  <!-- script part -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script>
+  const getStoreInfo = async () => {
+    const storeId = localStorage.getItem('storeId')
+    console.log('get storeId for getStoreInfo =>', storeId)
+    axios.get(`http://localhost:3000/api/user/stores/${storeId}`)
+      .then(function (response) {
+        console.log(response.data);
+        const storeInfo = response.data
+        const storeCard = document.querySelector("#store-container")
+
+        storeCard.innerHTML =
+          `<div id="card">
+            <p id="storeImage">${storeInfo.storeImage}</p>
+            <h3 class="storeName">${storeInfo.storeName}</h3>
+            <p id="totalRating">${storeInfo.totalRating}</p>
+          </div>`
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     }
 
     const getMenus = async () => {
@@ -129,8 +138,6 @@
       }
     };
     menuCardList.addEventListener('click', putMenuInCart);
-
-
   </script>
 </body>
 

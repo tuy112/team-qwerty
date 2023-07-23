@@ -10,13 +10,16 @@
   <title>Qwerty's Delivery</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/customer.css">
+
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
   <div id="wrap">
     <!-- header -->
     <header id="header">
-      <div class="inner2">
+      <div class="inner">
         <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
         <nav class="nav">
           <div id="store-container">
@@ -49,8 +52,9 @@
       </div>
     </footer>
   </div>
-  <script>
 
+  <!-- script part -->
+  <script>
     // 음식점 정보
     const getStoreInfo = async () => {
       const storeId = localStorage.getItem('storeId')

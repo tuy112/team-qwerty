@@ -7,6 +7,7 @@ function generateTableRows(dataArray) {
         const item = dataArray[i];
 
         const row = document.createElement("tr");
+        row.classList.add("menu");
 
         const menuIdCell = document.createElement("td");
         menuIdCell.textContent = item.menuId;
@@ -92,7 +93,7 @@ axios.get('http://localhost:3000/api/ceo/getMenuAll', data)
     })
 
 // 메뉴 수정
-function menuChange(menuId, menuName, menuImage, price) {
+function menuChange(menuId, menuName, menuImagePreview, price) {
     const popup = document.getElementById("menuEditPopup");
     const form = document.getElementById("editMenuForm");
 

@@ -30,6 +30,7 @@ router.post('/user/signup', async (req, res) => {
     if (!email || !verifyNumberInput || !password || !passwordConfirm) {
       return res.status(400).json({ message: '입력값이 유효하지 않습니다.' });
     }
+  
     // Session에서 verifyNumber 조회
     const verifyNumber = req.session.verifyNumber;
     console.log('verfifyNumber of Session =>', verifyNumber);
@@ -96,9 +97,6 @@ router.post('/user/signup/email', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const existUser = await Users.findOne({ where: { email } });
-
-  // // const passwordMatch = await bcrypt.compare(password, existUser.password);
-  // // console.log(passwordMatch)
 
   try {
     if (!req.body) {

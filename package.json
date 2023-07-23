@@ -1,7 +1,7 @@
 {
   "name": "team.qwerty",
   "version": "1.0.0",
-  "description": "",
+  "description": "checkRoute : 주문 + 배달확인<br>\r menuRoute : 사장님 메뉴등록<br>\r storeRoute : 사장님 회원정보관리(+회원탈퇴), 가게정보조회<br>\r <br>\r 사장님 계정 가입 email, password, confirm, storeName, storeImage<br>\r 사장님 음식 추가 menuName, menuImage, price<br>\r <br>\r ejs\r <br>",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",

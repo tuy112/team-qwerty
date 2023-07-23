@@ -27,8 +27,10 @@
                     </ul>
                 </nav>
                 <div class="searchWrap">
-                    <input type="text" placeholder="메뉴를 입력해주세요"/>
-                    <button class="search">검색</button>
+                    <label>
+                        <input type="text" name="검색" id="menuSearch" placeholder="메뉴 or 가격 입력" onkeyup="filter()"/>
+                        <button class="search" id="menuSearchBtn">검색</button>
+                    </label>
                 </div>
             </div>
         </header>
@@ -43,17 +45,6 @@
                     <div class="ceoPost">
                         <h3>사장님! 여기서 음식올리세요 :&#41;</h3>
                         <p>음식 조회,추가,수정,삭제</p>
-
-                        <form class="remote">
-                            <span class="center"> 
-                                <select>
-                                    <option value="메뉴이름" name="메뉴이름">메뉴이름</option>
-                                    <option value="가격" name="가격">가격</option>
-                                </select>
-                                <input type="text"/> 
-                                <input type="button" name="검색" class="gradient" value="검색"/>
-                            </span>
-                        </form>
                             
                         <table class="menu" id="menuTable">
                             <thead>
@@ -67,8 +58,8 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td id="storeId"></td>
+                              <tr class="menu">
+                                <td id="menuId"></td>
                                 <td id="menuName"></td>
                                 <td id="menuImage"></td>
                                 <td id="price"></td>
@@ -125,6 +116,19 @@
     <!-- script part -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="../js/ceoMenu.js"></script>
-    <!-- <script src="../js/ceoUsers.js"></script> -->
+    <script src="../js/ceoMenuSearch.js"></script>
+    <script>
+        // 4. logout
+        function logout() {
+            try {
+                axios.post('http://localhost:3000/api/ceo/logout')
+                    .then(response => {
+                        alert('사장님!!!!! 살펴가십쇼!!');
+                    })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    </script>
 </body>
 </html>

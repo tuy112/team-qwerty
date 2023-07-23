@@ -63,14 +63,3 @@ axios.get('http://localhost:3000/api/storeInfoList', { params: data })
     });
 
 /* =========================================================== */
-// 4. logout
-function logout() {
-    try {
-        axios.post('http://localhost:3000/api/ceo/logout')
-            .then(response => {
-                alert('사장님!!!!! 살펴가십쇼!!');
-            })
-    } catch (error) {
-        console.log(error);
-    }
-}

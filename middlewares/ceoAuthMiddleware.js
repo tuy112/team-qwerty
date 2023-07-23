@@ -1,7 +1,7 @@
 // 사장님 미들웨어
 
 const jwt = require('jsonwebtoken');
-const { Stores } = require('../../코딩/NODE/6th Weeks/TeamQwerty/models');
+const { Stores } = require('../models');
 
 module.exports = async (req, res, next) => {
     const { authorization } = req.cookies;
