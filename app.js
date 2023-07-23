@@ -5,16 +5,20 @@ const port = 3000; // HTML, CSS
 
 const path = require('path');
 
+const cors = require('cors')
+app.use(cors({ origin: true, credentials: true }));
+
 // cookie parser
 const cookieParser = require('cookie-parser');
 
-const storeRouter = require('./routes/storeRoute.js');
-const checkRouter = require('./routes/checkRoute.js');
-const menuRouter = require('./routes/menuRoute.js');
+const storeRouter = require('./routes/storeRoute.js'); 
+const checkRouter = require('./routes/checkRoute.js'); 
+const menuRouter = require('./routes/menuRoute.js'); 
 
-const UsersRouter = require('./routes/usersOrdersRoute.js');
-const UsersOrderRouter = require('./routes/usersReviewsRoute.js');
-const UsersReviewRouter = require('./routes/usersRoute.js');
+const orderRouter = require('./routes/orderRoute.js'); 
+const UsersRouter = require('./routes/usersRoute.js');
+const UsersReviewRouter = require('./routes/usersReviewsRoute.js'); 
+const cartRouter = require('./routes/cartRoute.js'); 
 
 const customerRouter = require('./pages/customerPages.js');
 const ceoRouter = require('./pages/ceoPages.js');
@@ -35,7 +39,7 @@ app.use(
 app.use(customerRouter, ceoRouter);
 
 // localhost:3000/api/
-app.use('/api', [storeRouter, checkRouter, menuRouter, UsersRouter, UsersOrderRouter, UsersReviewRouter]);
+app.use('/api', [storeRouter, checkRouter, menuRouter, orderRouter, UsersRouter, UsersReviewRouter, cartRouter]);
 
 // HTML, CSS
 app.use(express.static(path.join(__dirname, 'assets')));

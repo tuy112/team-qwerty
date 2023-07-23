@@ -5,19 +5,19 @@ const router = express.Router();
 
 // Middleware
 const authMiddleware = require('../middlewares/cusAuthMiddleware.js');
-const upload = require('../middlewares/ImgUploadMiddleware.js');
+
 
 // Model
-const { Reviews } = require('../models/index.js');
+const { Reviews } = require('../models');
 
 const { Op } = require('sequelize');
 
 // 리뷰 작성 API (POST)
-router.post('/user/:storeId/review', authMiddleware, upload.single('image'), async (req, res) => {
+router.post('/user/store/:storeId/review', authMiddleware, async (req, res) => { //upload.single('image'),
   const { userId } = res.locals.user;
   const { storeId } = req.params;
   const { rating, content } = req.body;
-  const imageUrl = req.file.location;
+  // const imageUrl = req.file.location;
 
   try {
     if (!storeId) {
@@ -27,15 +27,17 @@ router.post('/user/:storeId/review', authMiddleware, upload.single('image'), asy
       return res.status(400).json({ message: '입력값이 유효하지 않습니다.' });
     }
 
-    await Reviews.create({ userId, storeId, image: imageUrl, rating, content });
+    await Reviews.create({ userId, storeId, rating, content }); //image: imageUrl, 
     return res.status(201).json({ message: '리뷰 작성에 성공하였습니다.' });
-  } catch {
-    return res.status(400).json({ message: '리뷰 작성에 실패였습니다.' });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: '리뷰 작성에 실패했습니다.' });
   }
 });
 
-// 리뷰 조회 API (GET)
-router.get('/user/:storeId/review', async (req, res) => {
+
+// 리뷰 목록조회 API (GET)
+router.get('/user/store/:storeId/review', async (req, res) => {
   const { storeId } = req.params;
 
   try {
@@ -44,7 +46,10 @@ router.get('/user/:storeId/review', async (req, res) => {
     }
 
     const reviews = await Reviews.findAll({
-      attributes: ['reviewId', 'storeId', 'email', 'image', 'rating', 'content', 'createdAt', 'updatedAt'],
+      raw: true,
+      attributes: ['reviewId', 'storeId', 'userId', 'rating', 'content', 'createdAt', 'updatedAt'],
+      // include: [{model: Users, attributes:['userId']}], // 목록조회에 닉네임 추가.
+      where: {storeId},
       order: [['createdAt', 'DESC']],
     });
     return res.status(200).json({ data: reviews });
@@ -54,11 +59,11 @@ router.get('/user/:storeId/review', async (req, res) => {
 });
 
 // 리뷰 수정 API (PUT)
-router.put('/user/:storeId/review/:reviewId', authMiddleware, upload.single('image'), async (req, res) => {
+router.put('/user/store/:storeId/review/:reviewId', authMiddleware, async (req, res) => { //upload.single('image'),
   const { storeId, reviewId } = req.params;
   const { userId } = res.locals.user;
-  const { image, rating, content } = req.body;
-  const imageUrl = req.file.location;
+  const { rating, content } = req.body;
+  // const imageUrl = req.file.location;
 
   try {
     if (!storeId) {
@@ -74,8 +79,8 @@ router.put('/user/:storeId/review/:reviewId', authMiddleware, upload.single('ima
       return res.status(400).json({ message: '입력값이 유효하지 않습니다.' });
     }
 
-    await reviews.update(
-      { image: imageUrl, rating, content },
+    await Reviews.update(
+      { rating, content }, //image: imageUrl,
       { where: { [Op.and]: [{ reviewId }, { userId }] } },
     );
     return res.status(200).json({ data: '리뷰 수정에 성공하였습니다.' });
@@ -85,7 +90,7 @@ router.put('/user/:storeId/review/:reviewId', authMiddleware, upload.single('ima
 });
 
 // 리뷰 삭제 API (DELETE)
-router.delete('/user/:storeId/review/:reviewId', authMiddleware, async (req, res) => {
+router.delete('/user/store/:storeId/review/:reviewId', authMiddleware, async (req, res) => {
   const { storeId, reviewId } = req.params;
   const { userId } = res.locals.user;
 

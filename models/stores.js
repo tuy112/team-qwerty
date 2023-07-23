@@ -2,13 +2,7 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Stores extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       // Stores와 Menus는 일대다 관계
       this.hasMany(models.Menus, {
         sourceKey: 'storeId',
@@ -32,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      storeName: {
-        allowNull: false,
+      storeImage: {
         type: DataTypes.STRING,
       },
-      storeImage: {
+      storeName: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       totalRating: {

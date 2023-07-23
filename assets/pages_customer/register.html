@@ -110,7 +110,7 @@
     crossorigin="anonymous"></script>
   <script>
     function signUp() {
-      try {
+
         const data = {
           email: $('#inputEmail').val(),
           verifyNumberInput: $('#inputVerifyNumber').val(),
@@ -119,11 +119,16 @@
         }
         console.log(data)
         axios.post('http://localhost:3000/api/user/signup', data)
-          .then(data => console.log(data.data))
-      } catch (error) {
-        console.log(error)
-      }
-    }
+          .then(response => {
+            alert('회원가입이 완료되었습니다.');
+            location.href = './user/login';
+          },
+           data => console.log(data.data))
+          .catch(function (error) {
+                alert('회원가입에 실패하였습니다.');
+                location.href = './register';
+            })
+        }
 
     function emailSender() {
       try {
