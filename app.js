@@ -12,7 +12,6 @@ app.use(cors({ origin: true, credentials: true }));
 const cookieParser = require('cookie-parser');
 
 const storeRouter = require('./routes/storeRoute.js'); 
-const checkRouter = require('./routes/checkRoute.js'); 
 const menuRouter = require('./routes/menuRoute.js'); 
 
 const orderRouter = require('./routes/ordersRoute.js'); 
@@ -39,7 +38,7 @@ app.use(
 app.use(customerRouter, ceoRouter);
 
 // localhost:3000/api/
-app.use('/api', [storeRouter, checkRouter, menuRouter, orderRouter, UsersRouter, UsersReviewRouter, cartRouter]);
+app.use('/api', [storeRouter, menuRouter, orderRouter, UsersRouter, UsersReviewRouter, cartRouter]);
 
 // HTML, CSS
 app.use(express.static(path.join(__dirname, 'assets')));

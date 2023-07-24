@@ -105,7 +105,8 @@ function menuChange(menuId, menuName, menuImagePreview, price) {
 
     popup.style.display = "block";
 }
-// 이미지
+
+// 이미지 미리보기
 document.getElementById("menuImageInput").addEventListener("change", function (event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -120,6 +121,7 @@ document.getElementById("menuImageInput").addEventListener("change", function (e
         reader.readAsDataURL(file);
     }
 });
+
 function closePopup() {
     const popup = document.getElementById("menuEditPopup");
     popup.style.display = "none";

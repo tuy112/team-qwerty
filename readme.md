@@ -1,7 +1,6 @@
 # qwerty's Delivery
 
 ## CEO Part
-checkRoute : 주문 + 배달확인<br>
 menuRoute : 사장님 메뉴등록<br>
 storeRoute : 사장님 회원정보관리(+회원탈퇴), 가게정보조회<br>
 <br>
@@ -12,10 +11,10 @@ ejs
 <br>
 
 ## customer Part
-userRoute :
-ordersRoute :
-cartRoute :
-userReviewsRoute :
+userRoute : <br>
+ordersRoute : <br>
+cartRoute : <br>
+userReviewsRoute : <br>
 <br>
 고객 계정 가입 <br>
 고객 주문
